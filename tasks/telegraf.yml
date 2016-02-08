@@ -1,0 +1,14 @@
+- name: Gets telegraf deb
+  get_url:
+    url: "{{ telegraf_deb_url }}"
+    dest:  /tmp/telegraf.deb
+
+- name: Installs telegraf
+  apt:
+    deb: /tmp/telegraf.deb
+
+- name: Adds telegraf config
+  template:
+    src: telegraf.conf.j2
+    dest: /etc/opt/telegraf/telegraf.conf
+  notify: Restart telegraf

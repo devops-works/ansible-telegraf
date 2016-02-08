@@ -1,0 +1,1 @@
+- include: telegraf.yml tags=telegraf
