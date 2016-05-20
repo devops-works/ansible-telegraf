@@ -74,14 +74,14 @@
   # urls = ["udp://localhost:8089"] # UDP endpoint example
   urls = [ {{ telegraf_output_influxdb.urls| join("'") }} ] # required
   # The target database for metrics (telegraf will create it if not exists)
-  database = "{{ telegraf_output_influxdb.database}}" # required
+  database = "{{ telegraf_output_influxdb.database }}" # required
   # Precision of writes, valid values are n, u, ms, s, m, and h
   # note: using second precision greatly helps InfluxDB compression
-  precision = "{{ telegraf_output_influxdb.precision }}"
+  precision = "{{ telegraf_output_influxdb.precision | default('s') }}"
 
   # Connection timeout (for the connection with InfluxDB), formatted as a string.
   # If not provided, will default to 0 (no timeout)
-  timeout = "{{ telegraf_output_influxdb.timeout }}"
+  timeout = "{{ telegraf_output_influxdb.timeout i[ default('30s') ]}}"
   {% if telegraf_output_influxdb.username %}
   username = "{{ telegraf_output_influxdb.username }}"
   {% endif %}
