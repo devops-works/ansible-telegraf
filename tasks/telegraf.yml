@@ -9,6 +9,11 @@
     state: present
     update_cache: yes
 
+- name: Installs telegraf
+  apt:
+    pkg: telegraf
+    state: present
+
 - name: Adds telegraf config
   template:
     src: telegraf.conf.j2
