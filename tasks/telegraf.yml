@@ -1,14 +1,16 @@
-- name: Gets telegraf deb
-  get_url:
-    url: "{{ telegraf_deb_url }}"
-    dest:  /tmp/telegraf.deb
+- name: Imports influxdb apt key
+  apt_key: 
+    url: https://repos.influxdata.com/influxdb.key
+    state: present
 
-- name: Installs telegraf
-  apt:
-    deb: /tmp/telegraf.deb
+- name: Adds influxdb repository
+  apt_repository:
+    repo: "deb https://repos.influxdata.com/{{ ansible_lsb.id | lower }} {{ ansible_lsb.codename }} stable"
+    state: present
+    update_cache: yes
 
 - name: Adds telegraf config
   template:
     src: telegraf.conf.j2
-    dest: /etc/opt/telegraf/telegraf.conf
+    dest: /etc/telegraf/telegraf.conf
   notify: Restart telegraf

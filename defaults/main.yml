@@ -1,5 +1,5 @@
 telegraf_agent_debug: "false"
-telegraf_agent_hostname: "{{inventory_hostname }}"
+telegraf_agent_hostname: "{{ inventory_hostname }}"
 telegraf_agent_interval: "10s"
 telegraf_agent_flush_interval: "10s"
 telegraf_agent_flush_jitter: "0s"
