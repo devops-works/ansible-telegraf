@@ -82,18 +82,18 @@
   # Connection timeout (for the connection with InfluxDB), formatted as a string.
   # If not provided, will default to 0 (no timeout)
   timeout = "{{ telegraf_output_influxdb.timeout | default('30s') }}"
-  {% if telegraf_output_influxdb.username %}
+  {% if "username" in telegraf_output_influxdb %}
   username = "{{ telegraf_output_influxdb.username }}"
   {% endif %}
-  {% if telegraf_output_influxdb.password %}
+  {% if "password" in telegraf_output_influxdb %}
   password = "{{ telegraf_output_influxdb.password }}"
   {% endif %}
 
-  {% if telegraf_output_influxdb.user_agent %}
+  {% if "user_agent" in telegraf_output_influxdb %}
   # Set the user agent for HTTP POSTs (can be useful for log differentiation)
   user_agent = "{{ telegraf_output_influxdb.user_agent }}"
   {% endif %}
-  {% if telegraf_output_influxdb.udp_payload %}
+  {% if "udp_payload" in telegraf_output_influxdb %}
   # Set UDP payload size, defaults to InfluxDB UDP Client default (512 bytes)
   udp_payload = {{ telegraf_output_influxdb.udp_payload }}
   {% endif %}
