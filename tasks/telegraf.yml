@@ -24,7 +24,7 @@
   template:
     src: input.generic.conf.j2
     dest: "/etc/telegraf/telegraf.d/{{ item.key }}.conf"
-  with_dict: "[ {{ telegraf_inputs }} ]"
+  with_dict: "{ {{ telegraf_inputs }} }"
   notify: Restart telegraf
 
 - name: Add telegraf user in haproxy group if plugin is present
