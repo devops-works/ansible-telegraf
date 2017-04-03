@@ -1,2 +1,3 @@
-- include: telegraf.yml tags=telegraf
+- include: telegraf.yml
+  tags: ["telegraf"]
   when: telegraf_enabled
