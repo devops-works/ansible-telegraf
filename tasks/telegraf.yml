@@ -1,5 +1,5 @@
 - name: Imports influxdb apt key
-  apt_key: 
+  apt_key:
     url: https://repos.influxdata.com/influxdb.key
     state: present
 
@@ -27,11 +27,14 @@
   with_dict: "{{ telegraf_inputs }}"
   notify: Restart telegraf
 
-- name: Add telegraf user in haproxy group if plugin is present
+- name: Add telegraf user in required groups when needed
   user:
     name: telegraf
-    groups: haproxy
+    groups: "{{ item }}"
     append: true
-  when: '"haproxy" in telegraf_inputs'
+  when: '"{{ item }}" in telegraf_inputs'
+  with_items:
+    - docker
+    - haproxy
   notify: Restart telegraf
 
