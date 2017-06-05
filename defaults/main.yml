@@ -5,6 +5,8 @@ telegraf_agent_flush_interval: "10s"
 telegraf_agent_flush_jitter: "0s"
 telegraf_agent_round_interval: "true"
 
+telegraf_enabled: false
+
 telegraf_tags: {}
   # foo:
   #   - bar
