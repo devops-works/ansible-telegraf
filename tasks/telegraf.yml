@@ -32,7 +32,7 @@
     name: telegraf
     groups: "{{ item }}"
     append: true
-  when: '"{{ item }}" in telegraf_inputs'
+  when: item in telegraf_inputs
   with_items:
     - docker
     - haproxy
