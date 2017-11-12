@@ -27,11 +27,14 @@
   with_dict: "{{ telegraf_inputs }}"
   notify: Restart telegraf
 
+# We ignore errrors here since haproxy & docker might be installed affter
+# telegraf
 - name: Add telegraf user in required groups when needed
   user:
     name: telegraf
     groups: "{{ item }}"
     append: true
+  ignore_errors: true
   when: item in telegraf_inputs
   with_items:
     - docker
