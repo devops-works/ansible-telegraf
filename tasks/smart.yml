@@ -1,0 +1,21 @@
+- name: Installs smartmontools 
+  apt:
+    pkg: smartmontools
+    state: present
+  ignore_errors: true
+  when: smart in telegraf_inputs
+
+    #- name: Adds telegraf to sudoers
+    #  user:
+    #    name: telegraf
+    #    groups: sudo 
+
+- name: Install sudoers config to execute smartctl without password for telegraf
+  template:
+    src: 30-telegraf-smart.j2
+    dest: "/etc/sudoers.d/30-telegraf-smart"
+    mode: 0440
+    group: root
+    owner: root
+  ignore_errors: true
+  when: smart in telegraf_inputs
