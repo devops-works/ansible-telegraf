@@ -1,3 +1,4 @@
+---
 - name: Installs smartmontools 
   apt:
     pkg: smartmontools

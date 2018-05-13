@@ -1,3 +1,4 @@
+---
 - name: Imports influxdb apt key
   apt_key:
     url: https://repos.influxdata.com/influxdb.key
