@@ -50,7 +50,7 @@
     permissions: rX
     state: present
     recursive: true
-  when: "postfix" in telegraf_inputs
+  when: '"postfix" in telegraf_inputs'
   loop:
     - active
     - deferred
