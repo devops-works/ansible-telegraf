@@ -41,3 +41,20 @@
     - haproxy
   notify: Restart telegraf
 
+# Adds facl for postfix if required
+- name: Adds specific ACLs for postfix if needed
+  acl:
+    path: "{{ telegraf_inputs.postfix.queue_directory | default('/var/spool/postfix/') }}/{{ item }}"
+    entity: telegraf
+    etype: user
+    permissions: rX
+    state: present
+    recursive: true
+  when: "postfix" in telegraf_inputs
+  loop:
+    - active
+    - deferred
+    - hold
+    - incoming
+    - maildrop
+
