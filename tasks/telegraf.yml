@@ -4,11 +4,16 @@
     url: https://repos.influxdata.com/influxdb.key
     state: present
 
+- name: Installs apt-transport-https
+  apt:
+    pkg: apt-transport-https
+    state: present
+
 - name: Adds influxdb repository
   apt_repository:
     repo: "deb https://repos.influxdata.com/{{ ansible_lsb.id | lower }} {{ ansible_lsb.codename }} stable"
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: Installs telegraf
   apt:
@@ -58,4 +63,3 @@
     - hold
     - incoming
     - maildrop
-

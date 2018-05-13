@@ -1,3 +1,4 @@
+---
 telegraf_agent_debug: "false"
 telegraf_agent_hostname: "{{ inventory_hostname }}"
 telegraf_agent_interval: "10s"
@@ -8,13 +9,12 @@ telegraf_agent_round_interval: "true"
 telegraf_enabled: false
 
 telegraf_tags: {}
-  # foo:
-  #   - bar
-  #   - baz
-
+# foo:
+#   - bar
+#   - baz
 
 telegraf_output_influxdb: false
-#  urls: 
+#  urls:
 #  - "http://localhost:8086"
 #  - "http://some.other.server"
 #  database: dbname
@@ -27,7 +27,7 @@ telegraf_output_influxdb: false
 #  Set UDP payload size, defaults to InfluxDB UDP Client default (512 bytes)
 #  udp_payload = 512
 
-telegraf_plugins:
+telegraf_inputs:
   cpu:
     percpu: "true"
     totalcpu: "true"

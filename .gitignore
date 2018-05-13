@@ -1,2 +1,5 @@
+.ropeproject
 .vagrant/
+__pycache__
+*.pyc
 vagrant
