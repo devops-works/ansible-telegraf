@@ -4,4 +4,6 @@
 
 - include: smart.yml
   tags: ["telegraf"]
-  #  when: "smart in telegraf_input and telegraf_enabled
+  when:
+    - smart in telegraf_input
+    - telegraf_enabled
