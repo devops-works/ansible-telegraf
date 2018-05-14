@@ -4,6 +4,8 @@ ansible-telegraf role
 Installs [telegraf](https://github.com/influxdata/telegraf) on ubuntu
 14.04 and up.
 
+Requires Ansible 2.5+.
+
 See
 [defaults/main.yml](https://github.com/leucos/ansible-telegraf/blob/master/defaults/main.yml)
 for supported variables.
