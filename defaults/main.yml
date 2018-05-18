@@ -9,9 +9,9 @@ telegraf_agent_round_interval: "true"
 telegraf_enabled: false
 
 telegraf_tags: {}
-# foo:
-#   - bar
-#   - baz
+# telegraf_tags:
+#   foo: bar
+#   fizz: buzz
 
 telegraf_output_influxdb: false
 #  urls:

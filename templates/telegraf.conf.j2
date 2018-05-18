@@ -32,8 +32,8 @@
 
 # Tags can also be specified via a normal map, but only one form at a time:
 [global_tags]
-{% for key, value in telegraf_tags %}
-  {{ key }} = "{{ value.join("'") }}"
+{% for key,value in telegraf_tags.iteritems() %}
+  {{ key }} = "{{ value }}"
 {% endfor %}
 
 # Configuration for telegraf agent
