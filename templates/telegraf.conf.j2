@@ -31,7 +31,7 @@
 # with 'required'. Be sure to edit those to make this configuration work.
 
 # Tags can also be specified via a normal map, but only one form at a time:
-[tags]
+[global_tags]
 {% for key, value in telegraf_tags %}
   {{ key }} = "{{ value.join("'") }}"
 {% endfor %}
