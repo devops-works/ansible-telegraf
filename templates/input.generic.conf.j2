@@ -1,11 +1,13 @@
 [[inputs.{{ item.value[ "_input_name" ] | default( item.key ) }}]]
 {% for conf,val in item.value.iteritems() %}
-{%   if val is string %}
+{%   if conf != "_input_name" %}
+{%     if val is string %}
   {{ conf }} = {{ val }}
-{%   elif val is sequence %}
+{%     elif val is sequence %}
   {{ conf }} = [ "{{ val | join('","') }}" ]
-{%   else %}
+{%     else %}
   {{ conf }} = {{ val }}
-{% endif %}
+{%     endif %}
+{%   endif %}
 {% endfor %}
 
