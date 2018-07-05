@@ -1,4 +1,4 @@
-[[inputs.{{ item.key }}]]
+[[inputs.{{ item.value[ "_input_name" ] | default( item.key ) }}]]
 {% for conf,val in item.value.iteritems() %}
 {%   if val is string %}
   {{ conf }} = {{ val }}
