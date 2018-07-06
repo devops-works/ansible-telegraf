@@ -24,12 +24,18 @@
   template:
     src: telegraf.conf.j2
     dest: /etc/telegraf/telegraf.conf
+    mode: 0640
+    owner: telegraf
+    group: telegraf
   notify: Restart telegraf
 
 - name: Adds input plugins configs
   template:
     src: input.generic.conf.j2
     dest: "/etc/telegraf/telegraf.d/{{ item.key }}.conf"
+    mode: 0640
+    owner: telegraf
+    group: telegraf
   with_dict: "{{ telegraf_inputs }}"
   notify: Restart telegraf
 
