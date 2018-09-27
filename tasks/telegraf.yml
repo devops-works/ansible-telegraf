@@ -24,6 +24,7 @@
   apt:
     pkg: telegraf
     state: latest
+  update_cache: true
   when: telegraf_install_latest
 
 - name: Adds telegraf config
