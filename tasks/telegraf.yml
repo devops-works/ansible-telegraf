@@ -20,6 +20,12 @@
     pkg: telegraf
     state: present
 
+- name: Installs latest telegraf if required
+  apt:
+    pkg: telegraf
+    state: latest
+  when: telegraf_install_latest
+
 - name: Adds telegraf config
   template:
     src: telegraf.conf.j2

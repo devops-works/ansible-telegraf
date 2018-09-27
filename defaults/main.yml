@@ -8,6 +8,8 @@ telegraf_agent_round_interval: "true"
 
 telegraf_enabled: false
 
+telegraf_install_latest: false
+
 telegraf_tags: {}
 # telegraf_tags:
 #   foo: bar
