@@ -10,6 +10,22 @@ See
 [defaults/main.yml](https://github.com/leucos/ansible-telegraf/blob/master/defaults/main.yml)
 for supported variables.
 
+## Variables
+
+- `telegraf_enabled`: whether to install telegraf or not
+- `telegraf_install_latest`: if set to `true`, will always attempt to
+  install latest version
+- `telegraf_agent_debug`: debug mode
+- `telegraf_agent_hostname` hostname to use when reporting (default: inventory_hostname)
+- `telegraf_agent_interval`: collecting interval
+- `telegraf_agent_flush_interval`: reporting interval
+- `telegraf_agent_flush_jitter`: jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. ie, a jitter of 5s and flush_interval 10s means flushes will happen every 10-15s.
+- `telegraf_agent_round_interval`: rounds collection interval to 'interval' ie, if interval="10s" then always collect on :00, :10, :20, etc.
+- `telegraf_tags`: additional tags to add (dict)
+- `telegraf_output_influxdb`: influxdb servers
+
+## Inputs
+
 Telegraf inputs are specified this way:
 
 ```
@@ -48,6 +64,6 @@ telegraf_inputs:
 ```
 
 
-Run `vagrant up && vagrant ssh -c specs` tu run specs (and play with telegraf).
+Run `vagrant up && vagrant ssh -c specs` to run specs (and play with telegraf).
 
 Michel Blanc <mb@mbnet.fr>
