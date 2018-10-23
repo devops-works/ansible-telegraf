@@ -60,6 +60,15 @@
     - haproxy
   notify: Restart telegraf
 
+- name: Adds sudoers config to allow telegraf to collect fail2ban stats
+  template:
+    src: 30-telegraf-fail2ban-sudoers.j2
+    dest: /etc/sudoers.d/30_fail2ban
+    mode: 0440
+    owner: root
+    group: root
+  tags: ["sudo"]
+
 # Adds facl for postfix if required
 - name: Adds specific ACLs for postfix if needed
   acl:
