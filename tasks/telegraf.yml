@@ -67,6 +67,7 @@
     mode: 0440
     owner: root
     group: root
+  when: '"fail2ban" in telegraf_inputs'
   tags: ["sudo"]
 
 # Adds facl for postfix if required
