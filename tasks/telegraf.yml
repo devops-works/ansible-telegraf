@@ -23,7 +23,7 @@
 - name: Installs latest telegraf if required
   apt:
     pkg: telegraf
-    state: latest
+    state: present
     update_cache: true
   when: telegraf_install_latest
 

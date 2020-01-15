@@ -1,1 +1,4 @@
-telegraf ALL=(ALL:ALL) NOPASSWD: /usr/sbin/smartctl
+Cmnd_Alias SMARTCTL = /usr/sbin/smartctl
+telegraf  ALL=(ALL) NOPASSWD: SMARTCTL
+Defaults!SMARTCTL !logfile, !syslog, !pam_session
+
