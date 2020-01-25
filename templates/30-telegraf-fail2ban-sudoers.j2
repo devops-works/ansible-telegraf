@@ -1,1 +1,5 @@
-telegraf ALL=(root) NOEXEC: NOPASSWD: /usr/bin/fail2ban-client status, /usr/bin/fail2ban-client status *
+Cmnd_Alias FAIL2BAN = /usr/bin/fail2ban-client
+telegraf ALL=(root) NOEXEC: NOPASSWD: FAIL2BAN status, FAIL2BAN status *
+Defaults!FAIL2BAN !logfile, !syslog, !pam_session
+
+
