@@ -32,7 +32,7 @@
 
 # Tags can also be specified via a normal map, but only one form at a time:
 [global_tags]
-{% for key,value in telegraf_tags.iteritems() %}
+{% for key,value in telegraf_tags.items() %}
   {{ key }} = "{{ value }}"
 {% endfor %}
 
