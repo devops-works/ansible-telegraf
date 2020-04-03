@@ -3,8 +3,3 @@
   tags: ["telegraf"]
   when: telegraf_enabled
 
-- include: smart.yml
-  tags: ["telegraf"]
-  when:
-    - '"smart" in telegraf_inputs'
-    - telegraf_enabled

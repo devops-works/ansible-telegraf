@@ -15,6 +15,13 @@
     state: present
     update_cache: true
 
+- name: Installs smartmontools
+  apt:
+    pkg: smartmontools
+    state: present
+  tags: "telegraf:smart"
+  when: '"smart" in telegraf_inputs'
+
 - name: Installs telegraf
   apt:
     pkg: telegraf
@@ -34,6 +41,7 @@
     mode: 0640
     owner: telegraf
     group: telegraf
+  tags: "telegraf:config"
   notify: Restart telegraf
 
 - name: Adds input plugins configs
@@ -43,7 +51,8 @@
     mode: 0640
     owner: telegraf
     group: telegraf
-  with_dict: "{{ telegraf_inputs }}"
+  loop: "{{ telegraf_inputs | dict2items }}"
+  tags: "telegraf:config"
   notify: Restart telegraf
 
 # We ignore errrors here since haproxy & docker might be installed affter
@@ -55,12 +64,13 @@
     append: true
   ignore_errors: true
   when: item in telegraf_inputs
-  with_items:
+  loop:
     - docker
     - haproxy
+  tags: "telegraf:config"
   notify: Restart telegraf
 
-- name: Adds sudoers config to allow telegraf to collect {{ item.key }} stats
+- name: Adds sudoers config to allow telegraf to collect stats
   template:
     src: 30-telegraf-sudoers.j2
     dest: /etc/sudoers.d/30_{{ item.key }}
@@ -68,7 +78,7 @@
     owner: root
     group: root
   when: item.key in telegraf_inputs
-  tags: ["sudo"]
+  tags: "telegraf:sudo"
   loop: "{{ telegraf_sudoers | dict2items }}"
 
 # Adds facl for postfix if required
@@ -81,9 +91,12 @@
     state: present
     recursive: true
   when: '"postfix" in telegraf_inputs'
+  tags: "telegraf:config"
   loop:
     - active
     - deferred
     - hold
     - incoming
     - maildrop
+
+
