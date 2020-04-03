@@ -67,9 +67,9 @@
     mode: 0440
     owner: root
     group: root
-  when: '"{{ item.key }}" in telegraf_inputs'
+  when: item.key in telegraf_inputs
   tags: ["sudo"]
-  with_dict: "{{ telegraf_sudoers }}"
+  loop: "{{ telegraf_sudoers | dict2items }}"
 
 # Adds facl for postfix if required
 - name: Adds specific ACLs for postfix if needed
