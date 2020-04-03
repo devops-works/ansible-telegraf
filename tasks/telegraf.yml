@@ -80,6 +80,7 @@
   when: item.key in telegraf_inputs
   tags: "telegraf:sudo"
   loop: "{{ telegraf_sudoers | dict2items }}"
+  notify: Restart telegraf
 
 # Adds facl for postfix if required
 - name: Adds specific ACLs for postfix if needed

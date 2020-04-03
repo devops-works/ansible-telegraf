@@ -3,5 +3,5 @@ telegraf_deb_url: http://get.influxdb.org/telegraf/telegraf_0.3.0-beta1_amd64.de
 
 telegraf_sudoers:
   fail2ban: "/usr/bin/fail2ban-client status, /usr/bin/fail2ban-client status *"
-  iptables: "/usr/bin/iptables -nvL *"
+  iptables: "/sbin/iptables -nvL *"
   smart: "/usr/sbin/smartctl"
