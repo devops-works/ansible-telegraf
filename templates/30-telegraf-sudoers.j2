@@ -1,0 +1,4 @@
+Cmnd_Alias {{ item.key | upper }} = {{ item.value }}
+telegraf  ALL=(root) NOEXEC: NOPASSWD: {{ item.key | upper }}
+Defaults!{{ item.key | upper }} !logfile, !syslog, !pam_session
+
