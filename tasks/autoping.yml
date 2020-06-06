@@ -1,7 +1,7 @@
 ---
 # Adds automatic pinging between nodes
 
-- name: Adds telegraf capacility
+- name: Adds telegraf capability
   capabilities:
     path: /usr/bin/telegraf
     capability: cap_net_raw=eip
