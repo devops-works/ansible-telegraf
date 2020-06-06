@@ -4,5 +4,5 @@
   when: telegraf_enabled
 
 - include: autoping.yml
-  tags: ["telegraf"]
+  tags: ["telegraf","telegraf:ping"]
   when: telegraf_enabled and telegraf_autoping
