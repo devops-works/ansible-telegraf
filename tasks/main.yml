@@ -3,14 +3,6 @@
   tags: ["telegraf"]
   when: telegraf_enabled
 
-- include: telegraf.yml
-  tags: ["telegraf"]
-  when: telegraf_enabled
-
-- include: telegraf.yml
-  tags: ["telegraf"]
-  when: telegraf_enabled
-
 - include: autoping.yml
   tags: ["telegraf"]
   when: telegraf_enabled and telegraf_autoping
