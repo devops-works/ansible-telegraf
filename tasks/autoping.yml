@@ -13,3 +13,4 @@
     mode: 0640
     owner: telegraf
     group: telegraf
+  notify: Restart telegraf

@@ -11,7 +11,9 @@
 {% endfor %}
 
   ## Hosts to send ping packets to.
-  urls = [{{ hosts | map('quote') | join(",") }}]
+  ## urls = [{{ hosts | map('quote') | join(",") }}]
+
+  urls = [ {{ '\"' + hosts | join('\", \"') + '\"' }} ]
 
   ## Number of ping packets to send per interval.  Corresponds to the "-c"
   ## option of the ping command.
