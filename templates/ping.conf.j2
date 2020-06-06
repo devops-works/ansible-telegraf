@@ -27,7 +27,7 @@
 
   ## If set, the total ping deadline, in seconds.  Operates like the -w option
   ## of the ping command.
-  deadline = {{ (telegraf_agent_interval/2)|round }}
+  deadline = {{ (telegraf_agent_interval|int / 2) | round }}
 
   ## Interface or source address to send ping from.  Operates like the -I or -S
   ## option of the ping command.
