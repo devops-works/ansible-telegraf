@@ -7,8 +7,8 @@
 {%         if iface != 'lo' and 'active' in hostvars[host]['ansible_'+iface] and 'ipv4' in hostvars[host]['ansible_'+iface] %}
 {%           set _ = hosts.append(hostvars[host]['inventory_hostname']+'-'+iface) %}
 {%         endif %}
-{%       endif %}
-{%     endfor %}
+{%       endfor %}
+{%     endif %}
 {%   endif %}
 {% endfor %}
 
