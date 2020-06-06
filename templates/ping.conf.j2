@@ -1,10 +1,12 @@
 [[inputs.ping]]
 {% set hosts = [] %}
 {% for host in groups['all'] %}
-{%   if hostvars[host]['ansible_interfaces'] is defined %}
-{%     for iface in hostvars[host]['ansible_interfaces'] %}
-{%       if iface != 'lo' and 'active' in hostvars[host]['ansible_'+iface] and 'ipv4' in hostvars[host]['ansible_'+iface] %}
-{%         set _ = hosts.append(hostvars[host]['inventory_hostname']+'-'+iface) %}
+{%   if host != inventory_hostname %}
+{%     if hostvars[host]['ansible_interfaces'] is defined %}
+{%       for iface in hostvars[host]['ansible_interfaces'] %}
+{%         if iface != 'lo' and 'active' in hostvars[host]['ansible_'+iface] and 'ipv4' in hostvars[host]['ansible_'+iface] %}
+{%           set _ = hosts.append(hostvars[host]['inventory_hostname']+'-'+iface) %}
+{%         endif %}
 {%       endif %}
 {%     endfor %}
 {%   endif %}
