@@ -13,6 +13,8 @@ for supported variables.
 ## Variables
 
 - `telegraf_enabled`: whether to install telegraf or not
+- `telegraf_autoping`: whether to enable ping module and ping all inventory
+  hosts from each host
 - `telegraf_install_latest`: if set to `true`, will always attempt to
   install latest version
 - `telegraf_agent_debug`: debug mode

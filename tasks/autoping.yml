@@ -1,0 +1,15 @@
+---
+# Adds automatic pinging between nodes
+
+- name: Adds telegraf capacility
+  capabilities:
+    path: /usr/bin/telegraf
+    capability: cap_net_raw=eip
+
+- name: Adds autoping config
+  template:
+    src: ping.conf.j2
+    dest: "/etc/telegraf/telegraf.d/ping.conf"
+    mode: 0640
+    owner: telegraf
+    group: telegraf

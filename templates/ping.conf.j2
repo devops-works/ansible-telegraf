@@ -1,0 +1,37 @@
+[[inputs.ping]]
+{% set hosts = []
+{% for host in groups['all'] %}
+{%   if hostvars[host]['ansible_interfaces'] is defined %}
+{%     for iface in hostvars[host]['ansible_interfaces'] %}
+{%       if iface != 'lo' and 'active' in hostvars[host]['ansible_'+iface] and 'ipv4' in hostvars[host]['ansible_'+iface] %}
+{{         set _ = hosts.append(hostvars[host]['inventory_hostname']+'-'+iface | quote)
+{%       endif %}
+{%     endfor %}
+{%   endif %}
+{% endfor %}
+
+  ## Hosts to send ping packets to.
+  urls = [{{ hosts | join(",") }}]
+
+  ## Number of ping packets to send per interval.  Corresponds to the "-c"
+  ## option of the ping command.
+  # count = 1
+
+  ## Time to wait between sending ping packets in seconds.  Operates like the
+  ## "-i" option of the ping command.
+  # ping_interval = 1.0
+
+  ## If set, the time to wait for a ping response in seconds.  Operates like
+  ## the "-W" option of the ping command.
+  # timeout = 1.0
+
+  ## If set, the total ping deadline, in seconds.  Operates like the -w option
+  ## of the ping command.
+  deadline = {{ (telegraf_agent_interval/2)|round }}
+
+  ## Interface or source address to send ping from.  Operates like the -I or -S
+  ## option of the ping command.
+  # interface = ""
+
+  ## Use only IPv6 addresses when resolving a hostname.
+  # ipv6 = false
