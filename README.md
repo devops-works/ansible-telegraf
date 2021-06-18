@@ -65,6 +65,18 @@ telegraf_inputs:
   ...
 ```
 
+## MySQL
+
+For mysql plugintg to work best, the following grants are required:
+
+```sql
+GRANT SELECT, PROCESS, REPLICATION CLIENT ON *.* TO 'monitoring'@'localhost'
+```
+
+`SELECT` is required if you need to gather data from `INFORMATION_SCHEMA`
+tables.
+
+## Testing
 
 Run `vagrant up && vagrant ssh -c specs` to run specs (and play with telegraf).
 
