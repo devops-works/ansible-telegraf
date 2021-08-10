@@ -4,7 +4,7 @@
 {%     if val is string %}
   {{ conf }} = {{ val }}
 {%     elif val is sequence %}
-  {{ conf }} = [ "{{ val | join('","') }}" ]
+  {{ conf }} = [ "{{ val | sort | join('","') }}" ]
 {%     else %}
   {{ conf }} = {{ val }}
 {%     endif %}
