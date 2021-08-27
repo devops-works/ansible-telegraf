@@ -3,7 +3,7 @@
 {% for host in groups['all'] %}
 {%   if host != inventory_hostname %}
 {%     if hostvars[host]['ansible_interfaces'] is defined %}
-{%       for iface in hostvars[host]['ansible_interfaces'] %}
+{%       for iface in hostvars[host]['ansible_interfaces'] | sort %}
 {%         if not iface | regex_search("^(br|lo)") and 'active' in hostvars[host]['ansible_'+iface] and 'ipv4' in hostvars[host]['ansible_'+iface] %}
 {%           set _ = hosts.append(hostvars[host]['inventory_hostname']+'-'+iface) %}
 {%         endif %}

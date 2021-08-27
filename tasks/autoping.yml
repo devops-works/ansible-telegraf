@@ -5,6 +5,8 @@
   capabilities:
     path: /usr/bin/telegraf
     capability: cap_net_raw=eip
+  # module not idempotent :/
+  changed_when: false
 
 - name: Adds autoping config
   template:
