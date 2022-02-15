@@ -1,8 +1,9 @@
 ---
-- include: telegraf.yml
+- include_tasks: telegraf.yml
   tags: ["telegraf"]
   when: telegraf_enabled
 
-- include: autoping.yml
+- include_tasks: autoping.yml
   tags: ["telegraf","telegraf:ping"]
   when: telegraf_enabled and telegraf_autoping
+
