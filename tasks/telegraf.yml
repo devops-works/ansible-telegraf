@@ -55,6 +55,17 @@
   tags: "telegraf:config"
   notify: Restart telegraf
 
+- name: Adds processors plugins configs
+  template:
+    src: processor.generic.conf.j2
+    dest: "/etc/telegraf/telegraf.d/{{ item.key }}.conf"
+    mode: 0640
+    owner: telegraf
+    group: telegraf
+  loop: "{{ telegraf_processors | dict2items | list}}"
+  tags: "telegraf:config"
+  notify: Restart telegraf
+
 # We ignore errrors here since haproxy & docker might be installed affter
 # telegraf
 - name: Add telegraf user in required groups when needed
