@@ -1,0 +1,13 @@
+{% for topk in telegraf_processors.topk %}
+[[processors.topk]]
+{%  for name in topk.namepass %}
+{%    if loop.first %}
+  namepass = [{%    endif %}"{{ name }}"{% if not loop.last %},{% else %} ]{% endif %}
+{%   endfor %}
+
+{%  for name in topk.fields %}
+{%    if loop.first %}
+  fields = [{%    endif %} "{{ name }}"{% if not loop.last %},{% else %} ]{% endif %}
+{%   endfor %}
+{% endfor %}
+

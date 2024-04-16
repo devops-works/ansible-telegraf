@@ -1,2 +1,24 @@
 ---
-telegraf_enabled: true
+telegraf_enabled: "true"
+
+telegraf_inputs:
+  procstat:
+    pattern: '"."'
+    pid_tag: "true"
+    pid_finder: '"native"'
+    fieldpass: '[ "cpu_time_user", "cpu_usage", "memory_rss" ]'
+
+telegraf_processors:
+  regex:
+    - namepass: 
+      - "*procstat*"
+      tags:
+        - key: "process_name"
+          pattern: "^(.{60}).*"
+          replacement: "${1}..."
+  topk:
+    - namepass: ["*procstat*"]
+      fields: 
+        - "cpu_time_user"
+        - "cpu_usage"
+        - "memory_rss"

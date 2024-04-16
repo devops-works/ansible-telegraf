@@ -1,0 +1,10 @@
+---
+- name: Include a role from a collection
+  hosts: all
+  gather_facts: true
+  pre_tasks:
+    - ansible.builtin.setup:
+    - ansible.builtin.debug:
+        var: 
+  roles:
+    - ansible-telegraf

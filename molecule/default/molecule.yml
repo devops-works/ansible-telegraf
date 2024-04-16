@@ -1,30 +1,24 @@
 ---
 dependency:
   name: galaxy
+  options:
+    requirements-file: requirements.yml
 driver:
   name: docker
-lint:
-  name: yamllint
 platforms:
-  - name: telegraf-bionic
-    image: devopsworks/ubuntu-systemd:18.04
-    image_version: latest
+  - name: instance
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian11}-ansible:latest"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
-  - name: telegraf-xenial
-    image: devopsworks/ubuntu-systemd:16.04
-    image_version: latest
-    privileged: true
+    pre_build_image: true
 provisioner:
   name: ansible
+  lint:
+    name: ansible-lint
   inventory:
     links:
       group_vars: inventory/group_vars/
-  lint:
-    name: ansible-lint
-scenario:
-  name: default
 verifier:
-  name: testinfra
-  lint:
-    name: flake8
-    enabled: true
+  name: ansible

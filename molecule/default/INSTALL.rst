@@ -1,16 +1,15 @@
-*******
-Install
-*******
+***********************************
+Delegated driver installation guide
+***********************************
 
 Requirements
 ============
 
-* Docker Engine
-* docker-py
+This driver is delegated to the developer.  Up to the developer to implement
+requirements.
 
 Install
 =======
 
-.. code-block:: bash
-
-  $ sudo pip install docker-py
+This driver is delegated to the developer.  Up to the developer to implement
+requirements.

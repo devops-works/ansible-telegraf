@@ -19,7 +19,9 @@
   apt:
     pkg: smartmontools
     state: present
-  tags: "telegraf:smart"
+  tags:
+    - telegraf:smart
+    - smart
   when: '"smart" in telegraf_inputs'
 
 - name: Installs telegraf
@@ -41,7 +43,9 @@
     mode: 0640
     owner: telegraf
     group: telegraf
-  tags: "telegraf:config"
+  tags:
+    - telegraf:config
+    - config
   notify: Restart telegraf
 
 - name: Adds input plugins configs
@@ -52,18 +56,35 @@
     owner: telegraf
     group: telegraf
   loop: "{{ telegraf_inputs | dict2items | rejectattr('key', 'search', 'ping') | list}}"
-  tags: "telegraf:config"
+  tags:
+    - telegraf:config
+    - config
   notify: Restart telegraf
 
 - name: Adds processors plugins configs
   template:
-    src: processor.generic.conf.j2
-    dest: "/etc/telegraf/telegraf.d/{{ item.key }}.conf"
+    src: topk.processor.conf.j2
+    dest: "/etc/telegraf/telegraf.d/topk.conf"
     mode: 0640
     owner: telegraf
     group: telegraf
-  loop: "{{ telegraf_processors | dict2items | list}}"
-  tags: "telegraf:config"
+  when: "'topk' in telegraf_processors"
+  tags:
+    - telegraf:config
+    - config
+  notify: Restart telegraf
+
+- name: Adds regex plugin config
+  template:
+    src: regex.processor.conf.j2
+    dest: "/etc/telegraf/telegraf.d/regex.conf"
+    mode: 0640
+    owner: telegraf
+    group: telegraf
+  when: "'regex' in telegraf_processors"
+  tags:
+    - telegraf:config
+    - config
   notify: Restart telegraf
 
 # We ignore errrors here since haproxy & docker might be installed affter
@@ -78,7 +99,9 @@
   loop:
     - "docker"
     - "haproxy"
-  tags: "telegraf:config"
+  tags:
+    - telegraf:config
+    - config
   notify: Restart telegraf
 
 - name: Adds sudoers config to allow telegraf to collect stats
@@ -89,7 +112,9 @@
     owner: root
     group: root
   when: item.key in telegraf_inputs
-  tags: "telegraf:sudo"
+  tags:
+    - telegraf:sudo
+    - sudo
   loop: "{{ telegraf_sudoers | dict2items }}"
   notify: Restart telegraf
 
