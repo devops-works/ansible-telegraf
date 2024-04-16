@@ -39,3 +39,5 @@ telegraf_inputs:
   mem: {}
   swap: {}
   system: {}
+
+telegraf_processors: {}
