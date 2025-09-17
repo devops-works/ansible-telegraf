@@ -1,8 +1,9 @@
 ---
 - name: Imports influxdb apt key
-  apt_key:
+  ansible.builtin.get_url:
     url: https://repos.influxdata.com/influxdata-archive_compat.key
-    state: present
+    dest: /etc/apt/keyrings/influxdata.asc
+    mode: "0444"
 
 - name: Installs apt-transport-https
   apt:
@@ -11,7 +12,7 @@
 
 - name: Adds influxdb repository
   apt_repository:
-    repo: "deb https://repos.influxdata.com/{{ ansible_lsb.id | lower }} {{ ansible_lsb.codename }} stable"
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/influxdata.asc] https://repos.influxdata.com/{{ ansible_lsb.id | lower }} {{ ansible_lsb.codename }} stable"
     state: present
     update_cache: true
 
