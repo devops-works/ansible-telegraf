@@ -1,6 +1,12 @@
 ---
+# yamllint disable rule:line-length
+- name: Adds GPG package
+  ansible.builtin.apt:
+    name: gnupg
+    state: present
+
 - name: Ensure keyring directory exists
-  file:
+  ansible.builtin.file:
     path: /etc/apt/keyrings
     state: directory
     mode: "0755"
