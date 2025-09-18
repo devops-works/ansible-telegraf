@@ -1,4 +1,12 @@
 ---
+- name: Ensure keyring directory exists
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+
 - name: Imports influxdb apt key
   ansible.builtin.get_url:
     url: https://repos.influxdata.com/influxdata-archive_compat.key
