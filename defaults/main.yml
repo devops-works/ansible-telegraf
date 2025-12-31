@@ -1,4 +1,8 @@
 ---
+# Override this if your distro codename isn't available in InfluxData repos
+# (e.g., set to 'stable' for Debian trixie)
+telegraf_repo_codename: "{{ ansible_lsb.codename }}"
+
 telegraf_agent_debug: "false"
 telegraf_agent_hostname: "{{ inventory_hostname }}"
 telegraf_agent_interval: "10s"

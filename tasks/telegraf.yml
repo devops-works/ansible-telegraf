@@ -26,7 +26,7 @@
 
 - name: Adds influxdb repository
   apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/influxdata.asc] https://repos.influxdata.com/{{ ansible_lsb.id | lower }} {{ ansible_lsb.codename }} stable"
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/influxdata.asc] https://repos.influxdata.com/{{ ansible_lsb.id | lower }} {{ telegraf_repo_codename }} stable"
     state: present
     update_cache: true
 
