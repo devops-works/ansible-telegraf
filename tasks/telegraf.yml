@@ -13,27 +13,12 @@
     owner: root
     group: root
 
-- name: Download influxdata GPG key
-  ansible.builtin.get_url:
-    url: https://repos.influxdata.com/influxdata-archive.key
-    dest: /tmp/influxdata-archive.key
-    mode: "0644"
-  register: _influxdata_key
-
-- name: Verify and install influxdata GPG key
+- name: Download and install influxdata GPG key
   ansible.builtin.shell:
     cmd: |
-      gpg --show-keys --with-fingerprint --with-colons /tmp/influxdata-archive.key 2>&1 \
-      | grep -q '^fpr:\+24C975CBA61A024EE1B631787C3D57159FC2F927:$' \
-      && gpg --dearmor < /tmp/influxdata-archive.key > /etc/apt/keyrings/influxdata-archive.gpg
+      curl -fsSL https://repos.influxdata.com/influxdata-archive.key | gpg --dearmor -o /etc/apt/keyrings/influxdata-archive.gpg \
+      && chmod 644 /etc/apt/keyrings/influxdata-archive.gpg
     creates: /etc/apt/keyrings/influxdata-archive.gpg
-
-- name: Ensure influxdata GPG key has correct permissions
-  ansible.builtin.file:
-    path: /etc/apt/keyrings/influxdata-archive.gpg
-    mode: "0644"
-    owner: root
-    group: root
 
 - name: Installs apt-transport-https
   apt:
