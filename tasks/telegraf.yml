@@ -13,21 +13,43 @@
     owner: root
     group: root
 
-- name: Imports influxdb apt key
+- name: Download influxdata GPG key
   ansible.builtin.get_url:
-    url: https://repos.influxdata.com/influxdata-archive_compat.key
-    dest: /etc/apt/keyrings/influxdata.asc
-    mode: "0444"
+    url: https://repos.influxdata.com/influxdata-archive.key
+    dest: /tmp/influxdata-archive.key
+    mode: "0644"
+  register: _influxdata_key
+
+- name: Verify and install influxdata GPG key
+  ansible.builtin.shell:
+    cmd: |
+      gpg --show-keys --with-fingerprint --with-colons /tmp/influxdata-archive.key 2>&1 \
+      | grep -q '^fpr:\+24C975CBA61A024EE1B631787C3D57159FC2F927:$' \
+      && gpg --dearmor < /tmp/influxdata-archive.key > /etc/apt/keyrings/influxdata-archive.gpg
+  when: _influxdata_key.changed
+
+- name: Ensure influxdata GPG key has correct permissions
+  ansible.builtin.file:
+    path: /etc/apt/keyrings/influxdata-archive.gpg
+    mode: "0644"
+    owner: root
+    group: root
 
 - name: Installs apt-transport-https
   apt:
     pkg: apt-transport-https
     state: present
 
+- name: Remove old influxdb repository file
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/repos_influxdata_com_debian.list
+    state: absent
+
 - name: Adds influxdb repository
-  apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/influxdata.asc] https://repos.influxdata.com/{{ ansible_lsb.id | lower }} {{ telegraf_repo_codename }} main"
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/influxdata-archive.gpg] https://repos.influxdata.com/debian stable main"
     state: present
+    filename: influxdata
     update_cache: true
 
 - name: Installs smartmontools
