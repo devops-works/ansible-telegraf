@@ -51,7 +51,7 @@ telegraf_inputs:
     percpu: "true"
     totalcpu: "true"
     drop: ["cpu_time"]
-  disk: "{{ telegraf_inputs_disk_options }}"
+  disk: {}
   mem: {}
   swap: {}
   system: {}

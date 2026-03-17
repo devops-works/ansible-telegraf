@@ -1,5 +1,6 @@
-[[inputs.{{ item.value[ "_input_name" ] | default( item.key ) }}]]
-{% for conf,val in item.value.items() %}
+{% set _config = telegraf_inputs_disk_options | combine(item.value) if item.key == 'disk' else item.value %}
+[[inputs.{{ _config["_input_name"] | default(item.key) }}]]
+{% for conf,val in _config.items() %}
 {%   if conf != "_input_name" %}
 {%     if val is string %}
   {{ conf }} = {{ val }}

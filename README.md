@@ -25,6 +25,8 @@ for supported variables.
 - `telegraf_agent_round_interval`: rounds collection interval to 'interval' ie, if interval="10s" then always collect on :00, :10, :20, etc.
 - `telegraf_tags`: additional tags to add (dict)
 - `telegraf_output_influxdb`: influxdb servers
+- `telegraf_remote_mounts_check`: whether to monitor autodetected remote filesystem mounts (nfs, cifs, etc.) (default: `false`)
+- `telegraf_inputs_disk_options`: default options for the disk input plugin; merged automatically with any user-provided `disk` options in `telegraf_inputs` (default: `ignore_fs` excludes virtual filesystems, `interval` set to `60s`)
 
 ## Inputs
 
