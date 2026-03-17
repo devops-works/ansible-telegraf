@@ -11,6 +11,7 @@ telegraf_agent_flush_jitter: "0s"
 telegraf_agent_round_interval: "true"
 
 telegraf_autoping: false
+telegraf_remote_mounts_check: false
 telegraf_enabled: false
 
 telegraf_install_latest: false
@@ -34,12 +35,23 @@ telegraf_output_influxdb: false
 #  Set UDP payload size, defaults to InfluxDB UDP Client default (512 bytes)
 #  udp_payload = 512
 
+telegraf_inputs_disk_options:
+  ignore_fs:
+    - aufs
+    - devfs
+    - devtmpfs
+    - iso9660
+    - overlay
+    - squashfs
+    - tmpfs
+  interval: '"60s"'
+
 telegraf_inputs:
   cpu:
     percpu: "true"
     totalcpu: "true"
     drop: ["cpu_time"]
-  disk: {}
+  disk: "{{ telegraf_inputs_disk_options }}"
   mem: {}
   swap: {}
   system: {}

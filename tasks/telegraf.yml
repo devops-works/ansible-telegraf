@@ -83,6 +83,19 @@
     - config
   notify: Restart telegraf
 
+- name: Adds remote filesystem mount check config
+  template:
+    src: remote_mounts.conf.j2
+    dest: /etc/telegraf/telegraf.d/remote_mounts.conf
+    mode: 0640
+    owner: telegraf
+    group: telegraf
+  when: telegraf_remote_mounts_check
+  tags:
+    - telegraf:config
+    - config
+  notify: Restart telegraf
+
 - name: Adds processors plugins configs
   template:
     src: topk.processor.conf.j2
