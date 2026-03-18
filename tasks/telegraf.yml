@@ -16,9 +16,9 @@
 - name: Download and install influxdata GPG key
   ansible.builtin.shell:
     cmd: |
-      curl -fsSL https://repos.influxdata.com/influxdata-archive.key | gpg --dearmor -o /etc/apt/keyrings/influxdata-archive.gpg \
-      && chmod 644 /etc/apt/keyrings/influxdata-archive.gpg
-    creates: /etc/apt/keyrings/influxdata-archive.gpg
+      curl -fsSL https://repos.influxdata.com/influxdata-archive.key | gpg --dearmor -o /usr/share/keyrings/influxdata-archive.gpg \
+      && chmod 644 /usr/share/keyrings/influxdata-archive.gpg
+    creates: /usr/share/keyrings/influxdata-archive.gpg
 
 - name: Installs apt-transport-https
   apt:
@@ -32,7 +32,7 @@
 
 - name: Adds influxdb repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/influxdata-archive.gpg] https://repos.influxdata.com/debian stable main"
+    repo: "deb [signed-by=/usr/share/keyrings/influxdata-archive.gpg] https://repos.influxdata.com/debian stable main"
     state: present
     filename: influxdata
     update_cache: true
