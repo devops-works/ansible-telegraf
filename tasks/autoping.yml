@@ -1,12 +1,23 @@
 ---
 # Adds automatic pinging between nodes
 
+- name: Build list of ping hosts
+  ansible.builtin.set_fact:
+    _telegraf_ping_hosts: >-
+      {{ groups['all']
+         | difference([inventory_hostname])
+         | map('extract', hostvars)
+         | selectattr('ansible_interfaces', 'defined')
+         | map(attribute='inventory_hostname')
+         | list }}
+
 - name: Adds telegraf capability
   capabilities:
     path: /usr/bin/telegraf
     capability: cap_net_raw=eip
   # module not idempotent :/
   changed_when: false
+  when: _telegraf_ping_hosts | length > 0
 
 - name: Adds autoping config
   template:
@@ -15,4 +26,5 @@
     mode: 0640
     owner: telegraf
     group: telegraf
+  when: _telegraf_ping_hosts | length > 0
   notify: Restart telegraf
