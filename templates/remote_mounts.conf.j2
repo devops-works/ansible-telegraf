@@ -1,5 +1,5 @@
 # Monitors remote filesystem mount statuses
-{% for mount in ansible_mounts | selectattr('fstype', 'in', ['nfs', 'nfs4', 'cifs', 'smb3', 'glusterfs', 'ceph', 'lustre', 'fuse.sshfs']) %}
+{% for mount in ansible_mounts | selectattr('fstype', 'in', ['nfs', 'nfs4', 'cifs', 'smb3', 'glusterfs', 'ceph', 'lustre', 'fuse.sshfs']) | sort(attribute='mount') %}
 [[inputs.exec]]
   commands = ["bash -c 'findmnt --target {{ mount.mount }} -n > /dev/null 2>&1 && echo 0 || echo 1'"]
   name_override = "remote_mounts"
