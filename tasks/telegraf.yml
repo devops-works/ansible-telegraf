@@ -83,6 +83,19 @@
     - config
   notify: Restart telegraf
 
+- name: Adds output plugins configs
+  template:
+    src: output.generic.conf.j2
+    dest: "/etc/telegraf/telegraf.d/output-{{ item.key }}.conf"
+    mode: 0640
+    owner: telegraf
+    group: telegraf
+  loop: "{{ telegraf_outputs | dict2items }}"
+  tags:
+    - telegraf:config
+    - config
+  notify: Restart telegraf
+
 - name: Adds remote filesystem mount check config
   template:
     src: remote_mounts.conf.j2

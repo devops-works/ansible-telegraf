@@ -62,41 +62,5 @@
 #                                  OUTPUTS                                    #
 ###############################################################################
 
-[outputs]
-
-{% if telegraf_output_influxdb %}
-
-# Configuration for influxdb server to send metrics to
-[[outputs.influxdb]]
-  # The full HTTP or UDP endpoint URL for your InfluxDB instance.
-  # Multiple urls can be specified but it is assumed that they are part of the same
-  # cluster, this means that only ONE of the urls will be written to each interval.
-  # urls = ["udp://localhost:8089"] # UDP endpoint example
-  urls = [ "{{ telegraf_output_influxdb.urls| join('",""') }}" ] # required
-  # The target database for metrics (telegraf will create it if not exists)
-  database = "{{ telegraf_output_influxdb.database }}" # required
-  # Precision of writes, valid values are n, u, ms, s, m, and h
-  # note: using second precision greatly helps InfluxDB compression
-  precision = "{{ telegraf_output_influxdb.precision | default('s') }}"
-
-  # Connection timeout (for the connection with InfluxDB), formatted as a string.
-  # If not provided, will default to 0 (no timeout)
-  timeout = "{{ telegraf_output_influxdb.timeout | default('30s') }}"
-{%   if "username" in telegraf_output_influxdb %}
-  username = "{{ telegraf_output_influxdb.username }}"
-{%   endif %}
-{%   if "password" in telegraf_output_influxdb %}
-  password = "{{ telegraf_output_influxdb.password }}"
-{%   endif %}
-
-{%   if "user_agent" in telegraf_output_influxdb %}
-  # Set the user agent for HTTP POSTs (can be useful for log differentiation)
-  user_agent = "{{ telegraf_output_influxdb.user_agent }}"
-{%   endif %}
-{%   if "udp_payload" in telegraf_output_influxdb %}
-  # Set UDP payload size, defaults to InfluxDB UDP Client default (512 bytes)
-  udp_payload = {{ telegraf_output_influxdb.udp_payload }}
-{%   endif %}
-
-{% endif %}
-
+# Outputs are declared in `telegraf_outputs` and rendered in
+# /etc/telegraf/telegraf.d/output-*.conf (see templates/output.generic.conf.j2).

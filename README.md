@@ -24,7 +24,7 @@ for supported variables.
 - `telegraf_agent_flush_jitter`: jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. ie, a jitter of 5s and flush_interval 10s means flushes will happen every 10-15s.
 - `telegraf_agent_round_interval`: rounds collection interval to 'interval' ie, if interval="10s" then always collect on :00, :10, :20, etc.
 - `telegraf_tags`: additional tags to add (dict)
-- `telegraf_output_influxdb`: influxdb servers
+- `telegraf_outputs`: output plugins (dict, see below)
 - `telegraf_remote_mounts_check`: whether to monitor autodetected remote filesystem mounts (nfs, cifs, etc.) (default: `false`)
 - `telegraf_inputs_disk_options`: default options for the disk input plugin; merged automatically with any user-provided `disk` options in `telegraf_inputs` (default: `ignore_fs` excludes virtual filesystems, `interval` set to `60s`)
 
@@ -65,6 +65,38 @@ telegraf_inputs:
     drop: ["cpu_time"]
   disk: {}
   ...
+```
+
+## Outputs
+
+Outputs are declared exactly like inputs, in the `telegraf_outputs` dict.
+Each key produces a `/etc/telegraf/telegraf.d/output-<key>.conf` file:
+
+```
+telegraf_outputs:
+  influxdb:
+    urls: ["http://localhost:8086"]
+    database: '"telegraf"'
+    precision: '"s"'
+    timeout: '"30s"'
+```
+
+As with inputs, string values are emitted verbatim, so TOML strings must
+carry their own quotes (`'"s"'`); lists are quoted and joined automatically.
+
+`_output_name` works like `_input_name`, allowing several outputs of the same
+type:
+
+```
+telegraf_outputs:
+  influxdb_metrics:
+    _output_name: influxdb
+    urls: ["http://influx1:8086"]
+    database: '"metrics"'
+  influxdb_logs:
+    _output_name: influxdb
+    urls: ["http://influx2:8086"]
+    database: '"logs"'
 ```
 
 ## MySQL

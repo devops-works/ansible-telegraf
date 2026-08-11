@@ -1,0 +1,12 @@
+[[outputs.{{ item.value["_output_name"] | default(item.key) }}]]
+{% for conf,val in item.value.items() %}
+{%   if conf != "_output_name" %}
+{%     if val is string %}
+  {{ conf }} = {{ val }}
+{%     elif val is sequence %}
+  {{ conf }} = [ "{{ val | sort | join('","') }}" ]
+{%     else %}
+  {{ conf }} = {{ val }}
+{%     endif %}
+{%   endif %}
+{% endfor %}

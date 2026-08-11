@@ -21,19 +21,15 @@ telegraf_tags: {}
 #   foo: bar
 #   fizz: buzz
 
-telegraf_output_influxdb: false
-#  urls:
-#  - "http://localhost:8086"
-#  - "http://some.other.server"
-#  database: dbname
-#  precision: "s"
-#  timeout = "0s"
-#  username = "telegraf" ()
-#  password = "metricsmetricsmetricsmetrics"
-#  Set the user agent for HTTP POSTs (can be useful for log differentiation)
-#  user_agent = "telegraf"
-#  Set UDP payload size, defaults to InfluxDB UDP Client default (512 bytes)
-#  udp_payload = 512
+telegraf_outputs: {}
+# telegraf_outputs:
+#   influxdb:
+#     urls: ["http://localhost:8086"]
+#     database: '"telegraf"'
+#     precision: '"s"'
+#     timeout: '"30s"'
+#     username: '"telegraf"'
+#     password: '"metricsmetricsmetricsmetrics"'
 
 telegraf_inputs_disk_options:
   ignore_fs:
