@@ -25,17 +25,36 @@
     pkg: apt-transport-https
     state: present
 
-- name: Remove old influxdb repository file
+# Required by the deb822_repository module
+- name: Installs python3-debian
+  apt:
+    pkg: python3-debian
+    state: present
+
+- name: Remove old influxdb repository files
   ansible.builtin.file:
-    path: /etc/apt/sources.list.d/repos_influxdata_com_debian.list
+    path: "{{ item }}"
     state: absent
+  loop:
+    - /etc/apt/sources.list.d/repos_influxdata_com_debian.list
+    - /etc/apt/sources.list.d/influxdata.list
 
 - name: Adds influxdb repository
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/influxdata-archive.gpg] https://repos.influxdata.com/debian stable main"
+  ansible.builtin.deb822_repository:
+    name: influxdata
+    types: [deb]
+    uris: https://repos.influxdata.com/debian
+    suites: [stable]
+    components: [main]
+    signed_by: /usr/share/keyrings/influxdata-archive.gpg
     state: present
-    filename: influxdata
+    enabled: true
+  register: _telegraf_influxdata_repo
+
+- name: Update apt cache after repository change
+  apt:
     update_cache: true
+  when: _telegraf_influxdata_repo is changed
 
 - name: Installs smartmontools
   apt:

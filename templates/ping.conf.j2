@@ -1,9 +1,11 @@
 {% set hosts = [] %}
 {% for host in groups['all'] %}
 {%   if host != inventory_hostname %}
-{%     if hostvars[host]['ansible_interfaces'] is defined %}
-{%       for iface in hostvars[host]['ansible_interfaces'] | sort %}
-{%         if not iface | regex_search("^(br|lo|docker)") and 'active' in hostvars[host]['ansible_'+iface] and 'ipv4' in hostvars[host]['ansible_'+iface] %}
+{%     set facts = hostvars[host]['ansible_facts'] | default({}) %}
+{%     if facts['interfaces'] is defined %}
+{%       for iface in facts['interfaces'] | sort %}
+{%         set iface_facts = facts[iface | replace('-', '_')] | default({}) %}
+{%         if not iface | regex_search("^(br|lo|docker)") and 'active' in iface_facts and 'ipv4' in iface_facts %}
 {%           set _ = hosts.append(hostvars[host]['inventory_hostname']+'-'+iface) %}
 {%         endif %}
 {%       endfor %}
